@@ -1,64 +1,77 @@
-<html>
-<head>
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-</head>
-<center>
-<title> Bourbon In Philly </title>
-</center>
+<!DOCTYPE html>
+<html>	
+	<head>
+		<title> Bourbon HH Spots </title>
+		<link> rel=stylesheet' href='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css' />
+		<link> rel='stylesheet' type='text/css' href='css/own_style.css'>
+		<script> src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css'></script>
+		<script> src='js/leaflet-hash/js'></script>
+	<style>
+	.leaflet-popup-content-wrapper {
+	background: #0CAE38;
+	}
+	</style>
+	</head>
+	<body>
+		<div id='map'></div>
+		<script>
+		var map = L.map('map', {
+			zoomControl:true, maxZoom:16, minZoom:10
+			}).setView([39.9564689,-75.1539436], 14.53);
 
-<style>
-	body{ background-color:black;
+			var hash = new L.Hash(map);
+			var feature_group = new L.featureGroup([])
+			var basemap_1 = L.tileLayer('http://a.tile.stamen.com/toner-lite/{z}/{x}/{y}.png', {
+				attribution: additional_attrib + 'Map tiles by <a href='http://stamen.com'>Stamen design</a>
+				})
+				basemap_1.addTo(map);
+				var layerOrder=new Array();
+
+
+
+
+function onEachFeature(feature, layer) {
+	popupOptions = {maxWidth: 150};
+	if (feature.properties && feature.properties.Name) {
+	layer.bindPopup(feature.propperties.url + '<br>' + feature.properties.Name, popupOptions);
+}
 	}
-	h1{ font-weight: bold; font-size: 50px; color:silver;
-	}
-	h2{ color:silver; font-size: 20px;
-	}
-	
-</style>
-	
-<body>
-	<center>
-	<h1>Philadelphia Bourbon Happy Hour Spots</h1>
-	
-	<h2>My favorite spots in Philly where you can get a great drink for a great price!</h2>
-	
-	<div id='map' style="height:500px; width:1200px"></div>
-	<script>
-		var map = L.map('map').setView([39.9422, -75.1517], 13);
-		
-		var BourbonBranchPopup = '<img src="https://thesanfranciscobarexperiment.files.wordpress.com/2010/01/dsc00120.jpg" width="200" height="200" alt="Bar1"><br><b>Bourbon & Branch</b><br>Monday through Friday 5pm – 7pm / Tuesdays til 11pm<br>$5 Old Fashioned<br>$5 Whiskey Sours'; 
-		var StatesidePopup = '<img src="https://cdn2.vox-cdn.com/thumbor/vRPuu2ubYJiJWkvEozHLOj-pGh4=/0x6:243x143/1600x900/cdn0.vox-cdn.com/uploads/chorus_image/image/38851944/statesidelogo.0.png" width="200" height="200" alt="Bar2"><br><b>Stateside</b><br>Monday through Friday 5pm – 7pm<br>$5 Old Fashioned';
-		var FetteSauPopup = '<img src="https://pbs.twimg.com/profile_images/1383633189/fette.jpg" width="200" height="200" alt="Bar3"><br><b>Fette Sau</b><br>Monday through Friday 5pm – 7pm<br>$5 Old Fashioned<br>$5 Manhattan';
-		var LloydWhiskeyPopup = '<img src="https://pbs.twimg.com/profile_images/672171074402910208/33o2o45m.jpg" width="200" height="200" alt="Bar4"><br><b>Lloyd Whiskey Bar</b><br>Monday 5pm – 8pm<br>$6 Old Fashioned<br>$7 Manhattan<br>$8 NY Sour';
-		var TwistedTailPopup = '<img src="http://www.finalvinylband.com/images/Twisted-Tail-logo.jpg" width="200" height="200" alt="Bar5"><br><b>The Twisted Tail</b><br>Monday 5pm – 7pm<br>$7 Jim Beam Manhattan<br>Wednesday 5pm – 7pm<br>Bourbon $1 off/oz';
-		var GoodDogPopup = '<img src="http://www.rittenhousesquarebars.com/images/bars/gooddog.jpeg" width="200" height="200" alt="Bar6"><br><b>Good Dog Bar</b><br>Monday through Friday 5pm – 7pm<br>Saturday 4pm – pm<br>Sunday  10pm –  Midnight<br>$1 Off All Drinks';
-		var VedgePopup = '<img src="http://www.phoodie.info/wp-content/uploads/2012/06/vedgesign.jpeg" width="200" height="200" alt="Bar7"><br><b>Vedge</b><br>Monday through Friday 5pm – 7pm<br>$7 Salso Old Fashioned';
-			
-	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  	  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-	}).addTo(map);
-	
-	Bourbon_Branch = L.marker([39.9620, -75.1408]).addTo(map)
-   	.bindPopup(BourbonBranchPopup);
-   	
-	Stateside = L.marker([39.9302, -75.1632]).addTo(map)
-   	.bindPopup(StatesidePopup);
-   	
-	Fette_Sau = L.marker([39.9691, -75.1346]).addTo(map)
-   	.bindPopup(FetteSauPopup);
-   	
-	Lloyd_Whiskey = L.marker([39.9714, -75.1277]).addTo(map)
-   	.bindPopup(LloydWhiskeyPopup);
-   	
-	Twisted_Tail = L.marker([39.9418, -75.1451]).addTo(map)
-   	.bindPopup(TwistedTailPopup);
-   	
-	Good_Dog = L.marker([39.9487, -75.1662]).addTo(map)
-   	.bindPopup(GoodDogPopup);
-   	
-	Vedge = L.marker([39.9479, -75.1613]).addTo(map)
-   	.bindPopup(VedgePopup);
+
+	var mygeoJSON = [
+{
+'type:FeatureCollection',
+		'features': [
+
+			{
+			'type': 'Feature',
+			'properties': {
+				'OBJECTID' 1,
+				'Name': 'Bourbon & Branch<br> Monday through Friday 5pm - 7pm / Tuesdays until 11pm<br> $5 Old Fashion<br> $5 Whiskey Sours'
+				'url': '<'img src="https://thesanfranciscobarexperiment.files.wordpress.com/2010/01/dsc00120.jpg' height=200 width=200 />'
+			},
+			'geometry': {
+				'type': 'Point',
+				'coordinates': [
+					39.9620, 
+					-75.1408
+				]
+			}
+		},
+		{
+				'type': 'Feature',
+				'properties': {
+					'OBJECTID' 2,
+					'Name': 'Stateside<br> Monday through Friday 5pm - 7pm<br> $5 Old Fashion'
+					'url': 'img src="https://cdn2.vox-cdn.com/thumbor/vRPuu2ubYJiJWkvEozHLOj-pGh4=/0x6:243x143/1600x900/cdn0.vox-cdn.com/uploads/chorus_image/image/38851944/statesidelogo.0.png' height=200 width=200 />
+				},
+				'geometry': {
+					'type': 'Point'
+					'coordinates': [
+					39.9302, -75.1632]
+			}
+	},
+		]
+	}]
 	
 		
 	</script>
